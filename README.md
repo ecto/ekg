@@ -12,9 +12,10 @@ advanced process analytics for monitoring node.js runtime health
 
 The public ekg object is an EventEmitter. All data will be available through emissions.
 
-````javascript
+Call the ekg.start(interval) function to begin emitting events.
 
-var ekg = require('ekg');
+````javascript
+var ekg = require('ekg').start(50);
 
 ekg.on('memory', function(memory){
   console.log(data);
