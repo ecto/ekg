@@ -27,17 +27,27 @@ ekg.on('memory', function(memory){
 ekg.on('cpu', function(cpu){
   console.log('Processor 1 is running at ' + (cpu[0].total - cpu[0].idle) / 100 + '% of capacity');
 });
-
 ````
 
 To get immediate access to a certain piece of data, call the get() method
 
 ````javascript
-
 console.log(
   ekg.get('memory')
 );
+````
 
+You may also set conditional listeners with the when() method.
+
+````javascript
+ekg.when('memory full', function(){
+  console.log('System memory full. Exiting.');
+  process.exit();
+});
 ````
 
 # events 
+
+# get()
+
+# when()
