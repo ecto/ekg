@@ -1,7 +1,7 @@
 
 var ekg = require('../');
 
-ekg.on('cpu', function(){
+ekg.on('proc', function(){
   console.log(arguments);
 });
 

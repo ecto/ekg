@@ -1,7 +1,13 @@
 
 var ekg = require('../');
 
-ekg.on('cpu', function(){
+/*
+console.log(
+  ekg.get('memory')
+);
+*/
+
+ekg.on('memory', function(){
   console.log(arguments);
 });
 
