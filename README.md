@@ -18,15 +18,22 @@ Call the ekg.start(interval) function to begin emitting events.
 var ekg = require('ekg').start(50);
 
 ekg.on('memory', function(memory){
-  console.log(data);
-  if (memory.rss / memory.total > 80) {
+  var threshold = memory.total * 0.8;
+  if (memory.free < threshold) {
     console.log('Process is consuming more than 80% of total system memory. Exiting.');
     process.exit();
   }
 });
 
 ekg.on('cpu', function(cpu){
-  console.log('Processor 1 is running at ' + (cpu[0].total - cpu[0].idle) / 100 + '% of capacity');
+  console.log('Processor 1 has idled for ' + cpu[0].idle + ' cycles.');
+});
+
+ekg.on('proc', function(proc){
+  if (proc.cpuPercent > 80) {
+    console.log('Process is consuming more than 80% of CPU. Exiting.');
+    process.exit();
+  }
 });
 ````
 
@@ -37,21 +44,21 @@ console.log(
   ekg.get('memory')
 );
 ````
+Available for `memory`, `cpu`, and `proc`. Any other values will cause get() to throw an error.
 
-You may also set conditional listeners with the when() method.
+# data
 
-````javascript
-ekg.when('memory full', function(){
-  console.log('System memory full. Exiting.');
-  process.exit();
-});
-````
+##memory
 
-# events 
+Includes object members `free` and `total`.
 
-# get()
+##cpu
 
-# when()
+An array of objects for each CPU, containing `model`, `speed`, `nice`, `sys`, `user`, `irq`, and `idle`
+
+##proc
+
+An object with member `cpuPercent`
 
 # license
 
